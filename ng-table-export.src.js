@@ -26,7 +26,7 @@ angular.module('ngTableExport', [])
           }
 
           function stringify(str) {
-            if(attr.noQuotation) {
+            if(attrs.noQuotation) {
               return str.replace(/^\s\s*/, '').replace(/\s*\s$/, ''); // trim spaces
             }
             return '"' +
