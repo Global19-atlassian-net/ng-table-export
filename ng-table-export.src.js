@@ -20,9 +20,15 @@ angular.module('ngTableExport', [])
           var data = '';
 
           // allow pass in of delimiter via directive attrs
-          if (attrs.delimiter) { delimiter = attrs.delimiter; }
+          if (attrs.delimiter) {
+            delimiter = attrs.delimiter;
+            if(delimiter === 'TAB'){ delimiter = '\t'}
+          }
 
           function stringify(str) {
+            if(attr.noQuotation) {
+              return str.replace(/^\s\s*/, '').replace(/\s*\s$/, ''); // trim spaces
+            }
             return '"' +
               str.replace(/^\s\s*/, '').replace(/\s*\s$/, '') // trim spaces
                  .replace(/"/g,'""') + // replace quotes with double quotes
