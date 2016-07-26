@@ -10,11 +10,14 @@ bower install ng-table-export
 
 ## Example
 
-* [ngTable export to CSV](http://bazalt-cms.com/ng-table/example/15)
-
 ## IMPORTANT README
-This is my fork of [esvit/ng-table-export](https://github.com/esvit/ng-table-export)
+This is my fork of [davisford/ng-table-export](https://github.com/davisford/ng-table-export) who in turn folked from [esvit/ng-table-export](https://github.com/esvit/ng-table-export)
 
+## KrisGray changes
+* davisford added a way to change the delimiter by adding a delimiter attribute however it wasn't possible to delimit on a tab until now. Just provide the word TAB to the delimiter attribute like `delimiter="tab"`.
+* Sometime it is preferable not to quote each field. So I have added the ability to read an optional no-quotation attribute which will stop quoting fields.
+
+## davisford changes
 I made some considerable changes -- namely, I needed to [fix it to work with ng-table's pager](https://github.com/esvit/ng-table-export/issues/8).  If the pager is enabled, the export plugin would only export a page of data.  My fix is mostly a re-write, and it isn't perfect, but it seems to work for me.
 
 Since the plugin scrapes the HTML table data, the trick is to force the table to turn off the pager, let the browser re-render the full table, and only **then** parse the table (afterwards restoring the pager, to be nice and all).
