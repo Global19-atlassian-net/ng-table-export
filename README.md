@@ -16,6 +16,7 @@ This is my fork of [davisford/ng-table-export](https://github.com/davisford/ng-t
 ## KrisGray changes
 * davisford added a way to change the delimiter by adding a delimiter attribute however it wasn't possible to delimit on a tab until now. Just provide the word TAB to the delimiter attribute like `delimiter="tab"`.
 * Sometime it is preferable not to quote each field. So I have added the ability to read an optional no-quotation attribute which will stop quoting fields.
+* Large tables would not download on chrome, showing a "Failure - network error" error message. To counteract this the download now uses a blob rather than encodeURIComponent.
 
 ## davisford changes
 I made some considerable changes -- namely, I needed to [fix it to work with ng-table's pager](https://github.com/esvit/ng-table-export/issues/8).  If the pager is enabled, the export plugin would only export a page of data.  My fix is mostly a re-write, and it isn't perfect, but it seems to work for me.

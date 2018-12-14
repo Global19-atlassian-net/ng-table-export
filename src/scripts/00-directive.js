@@ -95,6 +95,44 @@ angular.module('ngTableExport', [])
             }, 0, false);
           }
 
+          function blobDownload(blob, filename, scope) {
+            if(window.navigator.msSaveOrOpenBlob) {
+              $timeout(function () {
+                try {
+                  window.navigator.msSaveBlob(blob, filename);
+                }
+                catch(err) {
+                  if (scope.logError) {
+                    scope.logError('NG Table Export Error saving file on client (MS).');
+                  }
+                  throw(err);
+                }
+              }, 0, false);
+            }
+            else{
+              var elem = window.document.createElement('a');
+              elem.style.display = 'none';
+              elem.href = window.URL.createObjectURL(blob);
+              elem.download = filename;
+              elem.target = '_blank';
+              $timeout(function () {
+                try {
+                  // must append to body for firefox; chrome & safari don't mind
+                  document.body.appendChild(elem);
+                  elem.click();
+                  // destroy
+                  document.body.removeChild(elem);
+                }
+                catch(err) {
+                  if (scope.logError) {
+                    scope.logError('NG Table Export Error saving file on client.');
+                  }
+                  throw(err);
+                }
+              }, 0, false);
+            }
+          }
+
           var csv = {
             /**
              *  Generate data URI from table data
@@ -120,7 +158,9 @@ angular.module('ngTableExport', [])
                     table.count(cnt);
                     table.reload();
                     // dynamically trigger download
-                    download(header + encodeURIComponent(data), filename, scope);
+                    //download(header + encodeURIComponent(data), filename, scope);
+                    var blob = new Blob([data], {type: 'text/csv'});
+                    blobDownload(blob,filename, scope);
                   }, 1000, false);
                 });
 
